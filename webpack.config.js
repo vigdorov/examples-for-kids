@@ -39,7 +39,7 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new FaviconsWebpackPlugin({
             logo: './public/icon-512x512.png',
-            manifest: './public/manifest.json'
+            manifest: './public/manifest.json',
         }),
     ],
 };

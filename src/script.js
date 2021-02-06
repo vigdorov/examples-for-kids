@@ -1,38 +1,28 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+    GAME_PAGE,
+    START_PAGE,
+    RESULT_PAGE,
+    FIRST_INPUT_ID,
+    SECOND_INPUT_ID,
+    SUM_INPUT_ID,
+    NAME_INPUT_ID,
+    CHECK_BUTTON_ID,
+    START_BUTTON_ID,
+    REPEAT_BUTTON_ID,
+    RESULT_CONTAINER_ID,
+    SIGN_SPAN_ID,
+    TEXT_SUCCESS_CLASS,
+    TEXT_DANGER_CLASS,
+    NO_DISPLAY_CLASS,
+    MAX_NUMBER,
+    EXAMPLE_TYPE,
+    MAX_COUNT_EXAMPLES,
+    EVENTS,
+    START_FORM_ID,
+} from './consts';
 import './style.css';
-// TODO скрыть переменные
-
-const LOCAL_DATA_KEY = 'example-for-kids';
-const START_PAGE = 'StartPage';
-const GAME_PAGE = 'GamePage';
-const RESULT_PAGE = 'ResultPage';
-const NO_DISPLAY_CLASS = 'd-none';
-const TEXT_SUCCESS_CLASS = 'text-success';
-const TEXT_DANGER_CLASS = 'text-danger';
-const NAME_INPUT_ID = 'startPageNameInput';
-
-const START_BUTTON_ID = 'start-button';
-const CHECK_BUTTON_ID = 'check-button';
-const REPEAT_BUTTON_ID = 'repeat-button';
-
-const FIRST_INPUT_ID = 'first-input';
-const SECOND_INPUT_ID = 'second-input';
-const SUM_INPUT_ID = 'sum-input';
-const RESULT_CONTAINER_ID = 'result-container';
-const SIGN_SPAN_ID = 'sign-span';
-
-const EXAMPLE_TYPE = {
-    PLUS: '+',
-    MINUS: '-',
-};
-
-const EVENTS = {
-    CLICK: 'click',
-};
-
-const MAX_NUMBER = 10;
-const MAX_COUNT_EXAMPLES = 10;
 
 let store = {
     page: START_PAGE,
@@ -54,11 +44,9 @@ const startButton = document.querySelector(`#${START_BUTTON_ID}`);
 const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
 const resultContainer = document.querySelector(`#${RESULT_CONTAINER_ID}`);
 const signSpan = document.querySelector(`#${SIGN_SPAN_ID}`);
+const startForm = document.querySelector(`#${START_FORM_ID}`);
 
-const getRandomNumber = (maxNumber) => Math.round(Math.random() * maxNumber);
-const getFirstNumber = () => getRandomNumber(MAX_NUMBER);
-const getSecondNumber = (firstNumber) => getRandomNumber(MAX_NUMBER - firstNumber);
-const getSum = (first, second) => first + second;
+const getRandomNumber = maxNumber => Math.round(Math.random() * maxNumber);
 
 const getPlusExample = () => {
     const first = getRandomNumber(MAX_NUMBER);
@@ -80,7 +68,7 @@ const getMinusExample = () => {
         first,
         second,
         sum: first - second,
-        type: EXAMPLE_TYPE.MINUS
+        type: EXAMPLE_TYPE.MINUS,
     };
 };
 
@@ -89,20 +77,9 @@ const getExample = () => {
     switch (exampleOrder) {
         case 0:
             return getPlusExample();
-        case 1:
+        default:
             return getMinusExample();
     }
-}
-
-const getData = (defaultData) => {
-    try {
-        return JSON.parse(localStorage.getItem(LOCAL_DATA_KEY)) || defaultData;
-    } catch (e) {
-        return defaultData;
-    }
-};
-const setData = (data) => {
-    localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(data));
 };
 
 const removeRandom = ({first, second, sum, type}) => {
@@ -113,7 +90,7 @@ const removeRandom = ({first, second, sum, type}) => {
         sum: miss !== 2 ? sum : '',
         type,
     };
-}
+};
 
 const setInput = (input, value) => {
     input.value = value;
@@ -122,7 +99,7 @@ const setInput = (input, value) => {
 
 const setTextContainer = (container, value) => {
     container.textContent = value;
-}
+};
 
 const setInputs = ({first, second, sum, type}) => {
     setInput(firstInput, first);
@@ -210,7 +187,12 @@ const startGame = () => {
     }
 };
 
-startButton.addEventListener(EVENTS.CLICK, () => {
+nameInput.addEventListener(EVENTS.INPUT, () => {
+    startButton.disabled = !nameInput.value;
+});
+
+startForm.addEventListener(EVENTS.SUBMIT, event => {
+    event.preventDefault();
     startGame();
 });
 

@@ -1,3 +1,7 @@
 .input-group.example {
     width: 240px;
 }
+
+.StartPage__container {
+    max-width: 350px;
+}
