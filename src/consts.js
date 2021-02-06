@@ -10,6 +10,7 @@ export const NAME_INPUT_ID = 'startPageNameInput';
 export const START_BUTTON_ID = 'start-button';
 export const CHECK_BUTTON_ID = 'check-button';
 export const REPEAT_BUTTON_ID = 'repeat-button';
+export const RESET_BUTTON_ID = 'reset-button';
 
 export const START_FORM_ID = 'start-form';
 export const EXAMPLE_FORM_ID = 'form-example';
@@ -33,3 +34,11 @@ export const EVENTS = {
 
 export const MAX_NUMBER = 10;
 export const MAX_COUNT_EXAMPLES = 10;
+
+export const DEFAULT_STORE = {
+    page: START_PAGE,
+    results: [],
+    userName: '',
+    answerCount: 0,
+    currentExample: {},
+};

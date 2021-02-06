@@ -22,15 +22,13 @@ import {
     EVENTS,
     START_FORM_ID,
     EXAMPLE_FORM_ID,
+    RESET_BUTTON_ID,
+    DEFAULT_STORE,
 } from './consts';
 import './style.css';
 
 let store = {
-    page: START_PAGE,
-    results: [],
-    userName: '',
-    answerCount: 0,
-    currentExample: {},
+    ...DEFAULT_STORE,
 };
 
 const startPage = document.querySelector(`.${START_PAGE}`);
@@ -43,6 +41,7 @@ const nameInput = document.querySelector(`#${NAME_INPUT_ID}`);
 const checkButton = document.querySelector(`#${CHECK_BUTTON_ID}`);
 const startButton = document.querySelector(`#${START_BUTTON_ID}`);
 const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
+const resetButton = document.querySelector(`#${RESET_BUTTON_ID}`);
 const resultContainer = document.querySelector(`#${RESULT_CONTAINER_ID}`);
 const signSpan = document.querySelector(`#${SIGN_SPAN_ID}`);
 const startForm = document.querySelector(`#${START_FORM_ID}`);
@@ -239,6 +238,14 @@ exampleForm.addEventListener(EVENTS.SUBMIT, event => {
 repeatButton.addEventListener(EVENTS.CLICK, () => {
     store.page = GAME_PAGE;
     startGame();
+    renderPage();
+});
+
+resetButton.addEventListener(EVENTS.CLICK, () => {
+    store = {
+        ...DEFAULT_STORE,
+    };
+    nameInput.value = '';
     renderPage();
 });
 
