@@ -1,3 +1,6 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css';
 // TODO скрыть переменные
 
 const LOCAL_DATA_KEY = 'example-for-kids';
