@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "api_version": 1,
+  "layout": {
+    "logo": "yandex-browser-50x50.png",
+    "color": "#fff",
+    "show_title": true
+  },
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "fullscreen",
+  "scope": "/",
+  "orientation": "portrait",
+  "start_url": "/",
+  "app_name": "Example for Kids",
+  "short_name": "Example"
+}
