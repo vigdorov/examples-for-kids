@@ -12,6 +12,7 @@ export const CHECK_BUTTON_ID = 'check-button';
 export const REPEAT_BUTTON_ID = 'repeat-button';
 
 export const START_FORM_ID = 'start-form';
+export const EXAMPLE_FORM_ID = 'form-example';
 
 export const FIRST_INPUT_ID = 'first-input';
 export const SECOND_INPUT_ID = 'second-input';

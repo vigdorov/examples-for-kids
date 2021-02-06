@@ -22,15 +22,17 @@
                     </form>
                 </div>
 
-                <div class="GamePage d-none">
-                    <div class="input-group example">
-                        <input class="form-control" id="first-input" type="number" pattern="\d*" />
-                        <span class="input-group-text" id="sign-span">+</span>
-                        <input class="form-control" id="second-input" type="number" pattern="\d*" />
-                        <span class="input-group-text">=</span>
-                        <input class="form-control" id="sum-input" type="number" pattern="\d*" />
-                    </div>
-                    <button class="btn btn-warning" id="check-button" type="button">Проверить</button>
+                <div class="row justify-content-center GamePage d-none">
+                    <form class="col GamePage__container" id="form-example">
+                        <div class="input-group example">
+                            <input class="form-control" id="first-input" type="number" pattern="\d*" />
+                            <span class="input-group-text" id="sign-span">+</span>
+                            <input class="form-control" id="second-input" type="number" pattern="\d*" />
+                            <span class="input-group-text">=</span>
+                            <input class="form-control" id="sum-input" type="number" pattern="\d*" />
+                        </div>
+                        <button class="btn btn-warning" id="check-button" type="submit">Проверить</button>
+                    </form>
                 </div>
 
                 <div class="ResultPage d-none">

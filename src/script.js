@@ -21,6 +21,7 @@ import {
     MAX_COUNT_EXAMPLES,
     EVENTS,
     START_FORM_ID,
+    EXAMPLE_FORM_ID,
 } from './consts';
 import './style.css';
 
@@ -45,6 +46,7 @@ const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
 const resultContainer = document.querySelector(`#${RESULT_CONTAINER_ID}`);
 const signSpan = document.querySelector(`#${SIGN_SPAN_ID}`);
 const startForm = document.querySelector(`#${START_FORM_ID}`);
+const exampleForm = document.querySelector(`#${EXAMPLE_FORM_ID}`);
 
 const getRandomNumber = maxNumber => Math.round(Math.random() * maxNumber);
 
@@ -95,6 +97,9 @@ const removeRandom = ({first, second, sum, type}) => {
 const setInput = (input, value) => {
     input.value = value;
     input.disabled = value !== '';
+    if (value === '') {
+        input.focus();
+    }
 };
 
 const setTextContainer = (container, value) => {
@@ -121,6 +126,7 @@ const setExample = () => {
     const {first, second, sum, type} = getExample();
     store.currentExample = {first, second, sum, type};
     setInputs(removeRandom({first, second, sum, type}));
+    checkButton.disabled = true;
 };
 
 const isEqual = (origin, answer) => {
@@ -170,6 +176,10 @@ const renderPage = () => {
             page.classList.add(NO_DISPLAY_CLASS);
         }
     });
+
+    if (store.page === START_PAGE) {
+        nameInput.focus();
+    }
 };
 
 const startGame = () => {
@@ -184,8 +194,21 @@ const startGame = () => {
         };
         renderPage();
         setExample();
+        checkButton.disabled = true;
     }
 };
+
+const isNotEmptyInputs = ({first, second, sum}) => {
+    return first !== '' && second !== '' && sum !== '';
+};
+
+const checkInput = () => {
+    checkButton.disabled = !isNotEmptyInputs(getInputs());
+};
+
+firstInput.addEventListener(EVENTS.INPUT, checkInput);
+secondInput.addEventListener(EVENTS.INPUT, checkInput);
+sumInput.addEventListener(EVENTS.INPUT, checkInput);
 
 nameInput.addEventListener(EVENTS.INPUT, () => {
     startButton.disabled = !nameInput.value;
@@ -196,17 +219,20 @@ startForm.addEventListener(EVENTS.SUBMIT, event => {
     startGame();
 });
 
-checkButton.addEventListener(EVENTS.CLICK, () => {
+exampleForm.addEventListener(EVENTS.SUBMIT, event => {
+    event.preventDefault();
     const origin = store.currentExample;
     const answer = getInputs();
-    store.results.push({origin, answer});
-    store.answerCount += 1;
-    if (store.answerCount < MAX_COUNT_EXAMPLES) {
-        setExample();
-    } else {
-        store.page = RESULT_PAGE;
-        renderResult();
-        renderPage();
+    if (isNotEmptyInputs(answer)) {
+        store.results.push({origin, answer});
+        store.answerCount += 1;
+        if (store.answerCount < MAX_COUNT_EXAMPLES) {
+            setExample();
+        } else {
+            store.page = RESULT_PAGE;
+            renderResult();
+            renderPage();
+        }
     }
 });
 
