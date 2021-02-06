@@ -17,6 +17,12 @@ const FIRST_INPUT_ID = 'first-input';
 const SECOND_INPUT_ID = 'second-input';
 const SUM_INPUT_ID = 'sum-input';
 const RESULT_CONTAINER_ID = 'result-container';
+const SIGN_SPAN_ID = 'sign-span';
+
+const EXAMPLE_TYPE = {
+    PLUS: '+',
+    MINUS: '-',
+};
 
 const EVENTS = {
     CLICK: 'click',
@@ -44,21 +50,46 @@ const checkButton = document.querySelector(`#${CHECK_BUTTON_ID}`);
 const startButton = document.querySelector(`#${START_BUTTON_ID}`);
 const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
 const resultContainer = document.querySelector(`#${RESULT_CONTAINER_ID}`);
+const signSpan = document.querySelector(`#${SIGN_SPAN_ID}`);
 
 const getRandomNumber = (maxNumber) => Math.round(Math.random() * maxNumber);
 const getFirstNumber = () => getRandomNumber(MAX_NUMBER);
 const getSecondNumber = (firstNumber) => getRandomNumber(MAX_NUMBER - firstNumber);
 const getSum = (first, second) => first + second;
-const getExample = () => {
-    const first = getFirstNumber();
-    const second = getSecondNumber(first);
+
+const getPlusExample = () => {
+    const first = getRandomNumber(MAX_NUMBER);
+    const second = getRandomNumber(MAX_NUMBER - first);
 
     return {
         first,
         second,
-        sum: getSum(first, second),
+        sum: first + second,
+        type: EXAMPLE_TYPE.PLUS,
     };
 };
+
+const getMinusExample = () => {
+    const first = getRandomNumber(MAX_NUMBER);
+    const second = getRandomNumber(first);
+
+    return {
+        first,
+        second,
+        sum: first - second,
+        type: EXAMPLE_TYPE.MINUS
+    };
+};
+
+const getExample = () => {
+    const exampleOrder = getRandomNumber(1);
+    switch (exampleOrder) {
+        case 0:
+            return getPlusExample();
+        case 1:
+            return getMinusExample();
+    }
+}
 
 const getData = (defaultData) => {
     try {
@@ -71,12 +102,13 @@ const setData = (data) => {
     localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(data));
 };
 
-const removeRandom = ({first, second, sum}) => {
+const removeRandom = ({first, second, sum, type}) => {
     const miss = getRandomNumber(2);
     return {
         first: miss !== 0 ? first : '',
         second: miss !== 1 ? second : '',
         sum: miss !== 2 ? sum : '',
+        type,
     };
 }
 
@@ -85,10 +117,15 @@ const setInput = (input, value) => {
     input.disabled = value !== '';
 };
 
-const setInputs = ({first, second, sum}) => {
+const setTextContainer = (container, value) => {
+    container.textContent = value;
+}
+
+const setInputs = ({first, second, sum, type}) => {
     setInput(firstInput, first);
     setInput(secondInput, second);
     setInput(sumInput, sum);
+    setTextContainer(signSpan, type);
 };
 
 const getInputs = () => {
@@ -96,25 +133,25 @@ const getInputs = () => {
         first: firstInput.value,
         second: secondInput.value,
         sum: sumInput.value,
+        type: signSpan.textContent,
     };
 };
 
 const setExample = () => {
-    const {first, second, sum} = getExample();
-    store.currentExample = {first, second, sum};
-    setInputs(removeRandom({first, second, sum}));
+    const {first, second, sum, type} = getExample();
+    store.currentExample = {first, second, sum, type};
+    setInputs(removeRandom({first, second, sum, type}));
 };
 
 const isEqual = (origin, answer) => {
-
     return Object.entries(origin).every(([key, value]) => {
         return `${value}` === `${answer[key]}`;
     });
 };
 
-const makeExampleDiv = ({first, second, sum}) => {
+const makeExampleDiv = ({first, second, sum, type}) => {
     const div = document.createElement('div');
-    div.textContent = `${first} + ${second} = ${sum}`;
+    div.textContent = `${first} ${type} ${second} = ${sum}`;
     return div;
 };
 
