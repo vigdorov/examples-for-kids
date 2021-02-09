@@ -6,7 +6,7 @@
   "lang": "en-US",
   "display": "fullscreen",
   "orientation": "portrait",
-  "start_url": "/?homescreen=1",
+  "start_url": "/examples-for-kids",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [

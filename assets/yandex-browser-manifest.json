@@ -10,6 +10,7 @@
   "background_color": "#ffffff",
   "display": "fullscreen",
   "orientation": "portrait",
+  "start_url": "/examples-for-kids",
   "app_name": "Example for Kids",
   "short_name": "Example"
 }
