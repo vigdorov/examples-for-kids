@@ -6,7 +6,7 @@
   "lang": "en-US",
   "display": "fullscreen",
   "orientation": "portrait",
-  "start_url": "/",
+  "start_url": "/?homescreen=1",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
@@ -56,6 +56,5 @@
       "type": "image/png"
     }
   ],
-  "scope": "/",
   "app_name": "Example for Kids"
 }
