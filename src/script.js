@@ -9,14 +9,15 @@ import {
     SUM_INPUT_ID,
     NAME_INPUT_ID,
     CHECK_BUTTON_ID,
-    START_BUTTON_ID,
+    START_BUTTON_EASY_ID,
+    START_BUTTON_NORMAL_ID,
+    START_BUTTON_HARD_ID,
     REPEAT_BUTTON_ID,
     RESULT_CONTAINER_ID,
     SIGN_SPAN_ID,
     TEXT_SUCCESS_CLASS,
     TEXT_DANGER_CLASS,
     NO_DISPLAY_CLASS,
-    MAX_NUMBER,
     EXAMPLE_TYPE,
     MAX_COUNT_EXAMPLES,
     EVENTS,
@@ -24,6 +25,7 @@ import {
     EXAMPLE_FORM_ID,
     RESET_BUTTON_ID,
     DEFAULT_STORE,
+    DIFFICULTY,
 } from './consts';
 import './style.css';
 
@@ -39,7 +41,11 @@ const secondInput = document.querySelector(`#${SECOND_INPUT_ID}`);
 const sumInput = document.querySelector(`#${SUM_INPUT_ID}`);
 const nameInput = document.querySelector(`#${NAME_INPUT_ID}`);
 const checkButton = document.querySelector(`#${CHECK_BUTTON_ID}`);
-const startButton = document.querySelector(`#${START_BUTTON_ID}`);
+
+const startButtonEasy = document.querySelector(`#${START_BUTTON_EASY_ID}`);
+const startButtonNormal = document.querySelector(`#${START_BUTTON_NORMAL_ID}`);
+const startButtonHard = document.querySelector(`#${START_BUTTON_HARD_ID}`);
+
 const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
 const resetButton = document.querySelector(`#${RESET_BUTTON_ID}`);
 const resultContainer = document.querySelector(`#${RESULT_CONTAINER_ID}`);
@@ -50,8 +56,8 @@ const exampleForm = document.querySelector(`#${EXAMPLE_FORM_ID}`);
 const getRandomNumber = maxNumber => Math.round(Math.random() * maxNumber);
 
 const getPlusExample = () => {
-    const first = getRandomNumber(MAX_NUMBER);
-    const second = getRandomNumber(MAX_NUMBER - first);
+    const first = getRandomNumber(store.difficulty);
+    const second = getRandomNumber(store.difficulty - first);
 
     return {
         first,
@@ -62,7 +68,7 @@ const getPlusExample = () => {
 };
 
 const getMinusExample = () => {
-    const first = getRandomNumber(MAX_NUMBER);
+    const first = getRandomNumber(store.difficulty);
     const second = getRandomNumber(first);
 
     return {
@@ -81,6 +87,10 @@ const getExample = () => {
         default:
             return getMinusExample();
     }
+};
+
+const getDifficulty = id => {
+    return DIFFICULTY[id];
 };
 
 const removeRandom = ({first, second, sum, type}) => {
@@ -181,7 +191,7 @@ const renderPage = () => {
     }
 };
 
-const startGame = () => {
+const startGame = id => {
     const userName = nameInput.value;
     if (userName) {
         store = {
@@ -190,6 +200,7 @@ const startGame = () => {
             results: [],
             answerCount: 0,
             currentExample: {},
+            difficulty: id ? getDifficulty(id) : store.difficulty,
         };
         renderPage();
         setExample();
@@ -209,13 +220,17 @@ firstInput.addEventListener(EVENTS.INPUT, checkInput);
 secondInput.addEventListener(EVENTS.INPUT, checkInput);
 sumInput.addEventListener(EVENTS.INPUT, checkInput);
 
-nameInput.addEventListener(EVENTS.INPUT, () => {
-    startButton.disabled = !nameInput.value;
-});
+const validateNameInput = () => {
+    startButtonEasy.disabled = !nameInput.value;
+    startButtonNormal.disabled = !nameInput.value;
+    startButtonHard.disabled = !nameInput.value;
+};
+
+nameInput.addEventListener(EVENTS.INPUT, validateNameInput);
 
 startForm.addEventListener(EVENTS.SUBMIT, event => {
     event.preventDefault();
-    startGame();
+    startGame(event.submitter.id);
 });
 
 exampleForm.addEventListener(EVENTS.SUBMIT, event => {
@@ -246,6 +261,7 @@ resetButton.addEventListener(EVENTS.CLICK, () => {
         ...DEFAULT_STORE,
     };
     nameInput.value = '';
+    validateNameInput();
     renderPage();
 });
 

@@ -10,7 +10,7 @@
 <body class="h-100">
     <div class="container h-100">
         <div class="d-flex justify-content-end pt-3">
-            <button class="btn btn-primary" type="button" id="reset-button"><i class="fas fa-sync"></i></button>
+            <button class="btn btn-primary" type="button" id="reset-button"><i class="fas fa-sync"></i> Сбросить</button>
         </div>
         <div class="row align-items-center justify-content-center h-100">
 
@@ -22,7 +22,14 @@
                             <input class="form-control" id="startPageNameInput" />
                         </div>
 
-                        <button class="btn btn-success" id="start-button" type="submit" disabled>Старт</button>
+                        <div class="mb-3">
+                            <div>Выберите сложность:</div>
+                            <div class="row">
+                                <button class="btn btn-info" type="submit" id="start-button-easy" disabled>Легко (10)</button>
+                                <button class="btn btn-warning" type="submit" id="start-button-normal" disabled>Нормально (20)</button>
+                                <button class="btn btn-danger" type="submit" id="start-button-hard" disabled>Сложно (100)</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
