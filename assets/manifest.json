@@ -1,12 +1,12 @@
 {
   "name": "examples-for-kids",
-  "short_name": "Example",
+  "short_name": "Примеры",
   "description": "",
   "dir": "auto",
   "lang": "en-US",
   "display": "fullscreen",
   "orientation": "portrait",
-  "start_url": "/examples-for-kids",
+  "start_url": "/",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
@@ -56,5 +56,5 @@
       "type": "image/png"
     }
   ],
-  "app_name": "Example for Kids"
+  "app_name": "Примеры для 1-2 классов"
 }
