@@ -1,16 +1,70 @@
 {
     "env": {
         "browser": true,
-        "es2020": true,
-        "node": true
+        "es2021": true,
+        "jest/globals": true
     },
-    "extends": ["eslint:recommended", "plugin:import/errors", "plugin:import/warnings"],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:jest/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 11,
+        "ecmaFeatures": {
+            "tsx": true
+        },
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
+    "plugins": ["react", "@typescript-eslint", "prettier", "jest"],
     "rules": {
-        "no-console": "warn",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [".ts", ".tsx"]
+            }
+        ],
+        "react-hooks/exhaustive-deps": [
+            "warn",
+            {
+                "additionalHooks": "(useEqualMemo|useStream)"
+            }
+        ],
+        "jsx-a11y/label-has-associated-control": 0,
+        "eqeqeq": "error",
+        "import/extensions": 0,
+        "react/prop-types": 0,
+        "no-underscore-dangle": 0,
+        "import/imports-first": 0,
+        "import/prefer-default-export": 0,
+        "import/no-unresolved": 0,
+        "import/newline-after-import": "error",
+        "react/jsx-props-no-spreading": 0,
+        "class-methods-use-this": 0,
+        "react/prefer-stateless-function": 0,
+        "react/jsx-fragments": 0,
+        "react/jsx-key": "warn",
+        "react/no-array-index-key": 0,
+        "react/display-name": 0,
+        "react/destructuring-assignment": 0,
+        "@typescript-eslint/no-non-null-assertion": 0,
+        "no-console": [
+            "warn",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
         "semi": "warn",
         "quotes": ["warn", "single"],
         "array-callback-return": [
@@ -21,7 +75,6 @@
             }
         ],
         "no-trailing-spaces": "warn",
-        "no-unused-vars": "warn",
         "default-case": "warn",
         "default-param-last": "warn",
         "no-alert": "warn",
@@ -38,8 +91,13 @@
         "require-await": "warn",
         "wrap-iife": ["warn", "inside"],
         "yoda": "warn",
-        "no-shadow": "warn",
-        "no-use-before-define": "warn",
+        "no-shadow": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-shadow": "warn",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-explicit-any": "off",
         "array-bracket-spacing": ["warn", "never"],
         "block-spacing": ["warn", "never"],
         "brace-style": ["warn", "1tbs", {"allowSingleLine": true}],
@@ -49,7 +107,6 @@
         "computed-property-spacing": ["warn", "never"],
         "eol-last": ["warn", "always"],
         "func-call-spacing": ["warn", "never"],
-        "func-style": ["warn", "expression"],
         "keyword-spacing": ["warn", {"before": true}],
         "line-comment-position": ["warn", {"position": "above"}],
         "lines-between-class-members": ["warn", "always"],
@@ -79,7 +136,14 @@
         "object-property-newline": ["warn", {"allowAllPropertiesOnSameLine": true}],
         "key-spacing": ["warn", {"beforeColon": false, "afterColon": true}],
         "space-before-blocks": "warn",
-        "space-before-function-paren": ["warn", "always"],
+        "space-before-function-paren": [
+            "warn",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
         "space-in-parens": ["warn", "never"],
         "space-infix-ops": "warn",
         "arrow-parens": ["warn", "as-needed"],
