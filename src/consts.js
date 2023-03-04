@@ -13,6 +13,9 @@ export const START_BUTTON_EASY_ID = 'start-button-easy';
 export const START_BUTTON_NORMAL_ID = 'start-button-normal';
 export const START_BUTTON_HARD_ID = 'start-button-hard';
 
+export const START_MULTI_BUTTON_NORMAL_ID = 'start-multi-button-normal';
+export const START_MULTI_BUTTON_HARD_ID = 'start-multi-button-hard';
+
 export const CHECK_BUTTON_ID = 'check-button';
 export const REPEAT_BUTTON_ID = 'repeat-button';
 export const RESET_BUTTON_ID = 'reset-button';
@@ -26,9 +29,16 @@ export const SUM_INPUT_ID = 'sum-input';
 export const RESULT_CONTAINER_ID = 'result-container';
 export const SIGN_SPAN_ID = 'sign-span';
 
+export const KIND = {
+    PLUS_MINUS: 'PLUS_MINUS',
+    MULTI_DIVISION: 'MULTI_DIVISION',
+};
+
 export const EXAMPLE_TYPE = {
     PLUS: '+',
     MINUS: '-',
+    MULTI: '*',
+    DIVISION: '/',
 };
 
 export const EVENTS = {
@@ -41,6 +51,8 @@ export const DIFFICULTY = {
     [START_BUTTON_EASY_ID]: 10,
     [START_BUTTON_NORMAL_ID]: 20,
     [START_BUTTON_HARD_ID]: 100,
+    [START_MULTI_BUTTON_NORMAL_ID]: 10,
+    [START_MULTI_BUTTON_HARD_ID]: 20,
 };
 
 export const MAX_COUNT_EXAMPLES = 10;

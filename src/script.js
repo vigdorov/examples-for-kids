@@ -12,6 +12,8 @@ import {
     START_BUTTON_EASY_ID,
     START_BUTTON_NORMAL_ID,
     START_BUTTON_HARD_ID,
+    START_MULTI_BUTTON_NORMAL_ID,
+    START_MULTI_BUTTON_HARD_ID,
     REPEAT_BUTTON_ID,
     RESULT_CONTAINER_ID,
     SIGN_SPAN_ID,
@@ -26,6 +28,7 @@ import {
     RESET_BUTTON_ID,
     DEFAULT_STORE,
     DIFFICULTY,
+    KIND,
 } from './consts';
 import './style.css';
 
@@ -45,6 +48,9 @@ const checkButton = document.querySelector(`#${CHECK_BUTTON_ID}`);
 const startButtonEasy = document.querySelector(`#${START_BUTTON_EASY_ID}`);
 const startButtonNormal = document.querySelector(`#${START_BUTTON_NORMAL_ID}`);
 const startButtonHard = document.querySelector(`#${START_BUTTON_HARD_ID}`);
+
+const startButtonMultiNormal = document.querySelector(`#${START_MULTI_BUTTON_NORMAL_ID}`);
+const startButtonMultiHard = document.querySelector(`#${START_MULTI_BUTTON_HARD_ID}`);
 
 const repeatButton = document.querySelector(`#${REPEAT_BUTTON_ID}`);
 const resetButton = document.querySelector(`#${RESET_BUTTON_ID}`);
@@ -79,18 +85,60 @@ const getMinusExample = () => {
     };
 };
 
-const getExample = () => {
-    const exampleOrder = getRandomNumber(1);
-    switch (exampleOrder) {
-        case 0:
-            return getPlusExample();
-        default:
-            return getMinusExample();
-    }
+const getMultiplicationExample = () => {
+    const first = getRandomNumber(store.difficulty);
+    const second = getRandomNumber(store.difficulty);
+
+    return {
+        first,
+        second,
+        sum: first * second,
+        type: EXAMPLE_TYPE.MULTI,
+    };
 };
 
-const getDifficulty = id => {
+const getDivisionExample = () => {
+    const first = getRandomNumber(store.difficulty);
+    const second = getRandomNumber(store.difficulty);
+    const result = first * second;
+
+    return {
+        first: result,
+        second,
+        sum: first,
+        type: EXAMPLE_TYPE.DIVISION,
+    };
+};
+
+const getExample = () => {
+    const isPlusMinusKind = store.kind === KIND.PLUS_MINUS;
+
+    const exampleOrder = getRandomNumber(1);
+
+    switch (exampleOrder) {
+        case 0:
+            return isPlusMinusKind ? getPlusExample() : getMultiplicationExample();
+        default:
+            return isPlusMinusKind ? getMinusExample() : getDivisionExample();
+    }
+
+};
+
+const getDifficultyById = id => {
     return DIFFICULTY[id];
+};
+
+const getExampleKindById = id => {
+    switch (id) {
+        case START_BUTTON_EASY_ID:
+        case START_BUTTON_NORMAL_ID:
+        case START_BUTTON_HARD_ID: {
+            return KIND.PLUS_MINUS;
+        }
+        default: {
+            return KIND.MULTI_DIVISION;
+        }
+    }
 };
 
 const removeRandom = ({first, second, sum, type}) => {
@@ -200,7 +248,8 @@ const startGame = id => {
             results: [],
             answerCount: 0,
             currentExample: {},
-            difficulty: id ? getDifficulty(id) : store.difficulty,
+            difficulty: id ? getDifficultyById(id) : store.difficulty,
+            kind: getExampleKindById(id),
         };
         renderPage();
         setExample();
@@ -224,6 +273,8 @@ const validateNameInput = () => {
     startButtonEasy.disabled = !nameInput.value;
     startButtonNormal.disabled = !nameInput.value;
     startButtonHard.disabled = !nameInput.value;
+    startButtonMultiNormal.disabled = !nameInput.value;
+    startButtonMultiHard.disabled = !nameInput.value;
 };
 
 nameInput.addEventListener(EVENTS.INPUT, validateNameInput);
