@@ -59,7 +59,11 @@ const signSpan = document.querySelector(`#${SIGN_SPAN_ID}`);
 const startForm = document.querySelector(`#${START_FORM_ID}`);
 const exampleForm = document.querySelector(`#${EXAMPLE_FORM_ID}`);
 
-const getRandomNumber = maxNumber => Math.round(Math.random() * maxNumber);
+const getRandomNumber = (maxNumber, minNumber = 0) => {
+    const multi = maxNumber - minNumber;
+
+    return Math.round(Math.random() * multi) + minNumber;
+};
 
 const getPlusExample = () => {
     const first = getRandomNumber(store.difficulty);
@@ -85,9 +89,11 @@ const getMinusExample = () => {
     };
 };
 
+const getMultiNumber = maxNumber => getRandomNumber(maxNumber, 1);
+
 const getMultiplicationExample = () => {
-    const first = getRandomNumber(store.difficulty);
-    const second = getRandomNumber(store.difficulty);
+    const first = getMultiNumber(store.difficulty);
+    const second = getMultiNumber(store.difficulty);
 
     return {
         first,
@@ -98,8 +104,8 @@ const getMultiplicationExample = () => {
 };
 
 const getDivisionExample = () => {
-    const first = getRandomNumber(store.difficulty);
-    const second = getRandomNumber(store.difficulty);
+    const first = getMultiNumber(store.difficulty);
+    const second = getMultiNumber(store.difficulty);
     const result = first * second;
 
     return {
