@@ -3,7 +3,7 @@
     "background_color": "#ffffff",
     "display": "fullscreen",
     "orientation": "portrait",
-    "start_url": "/",
+    "start_url": "/examples-for-kids",
     "app_name": "Примеры для 1-2 классов",
     "short_name": "Примеры"
 }
