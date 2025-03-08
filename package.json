@@ -8,7 +8,7 @@
         "dev": "webpack serve --mode=development --open=false",
         "build": "webpack --mode=production",
         "lint": "eslint -c .eslintrc.json src --fix",
-        "test": "jest"
+        "test": "jest --coverage"
     },
     "repository": {
         "type": "git",
