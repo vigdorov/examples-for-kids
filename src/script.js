@@ -130,7 +130,7 @@ const getExample = () => {
 
 };
 
-const getDifficultyById = id => {
+export const getDifficultyById = id => {
     return DIFFICULTY[id];
 };
 
