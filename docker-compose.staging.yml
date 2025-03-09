@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  frontend:
+    image: examples-for-kids:${BUILD_NUMBER:-latest}
+    ports:
+      - "3001:80"
