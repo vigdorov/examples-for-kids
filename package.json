@@ -8,7 +8,17 @@
         "dev": "webpack serve --mode=development --open=false",
         "build": "webpack --mode=production",
         "lint": "eslint -c .eslintrc.json src --fix",
-        "test": "jest --coverage --verbose"
+        "test": "jest --coverage --verbose",
+        "test:ci": "jest --coverage --verbose --ci --reporters=default --reporters=jest-junit"
+    },
+    "jest-junit": {
+        "outputDirectory": "reports",
+        "outputName": "junit.xml",
+        "ancestorSeparator": " › ",
+        "uniqueOutputName": "false",
+        "suiteNameTemplate": "{filepath}",
+        "classNameTemplate": "{classname}",
+        "titleTemplate": "{title}"
     },
     "repository": {
         "type": "git",
